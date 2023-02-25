@@ -35,8 +35,8 @@ def elapsed_time(start_time, end_time):
 params_file_list = []
 
 # pnet
-params_file_list.append('./pnet/onsplit_average_reg_10_tanh_large_testing')
-# params_file_list.append('./pnet/onsplit_average_reg_10_tanh_large_testing_inner')
+# params_file_list.append('./pnet/onsplit_average_reg_10_tanh_large_testing')
+params_file_list.append('./pnet/onsplit_average_reg_10_tanh_large_testing_inner')
 # params_file_list.append('./pnet/crossvalidation_average_reg_10_tanh')
 #
 # # other ML models

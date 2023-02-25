@@ -5,7 +5,7 @@ task = 'classification_binary'
 selected_genes = 'tcga_prostate_expressed_genes_and_cancer_genes_and_memebr_of_reactome.csv'
 data_base = {'id': 'ALL', 'type': 'prostate_paper',
              'params': {
-                 'data_type': ['mut_important', 'cnv_del', 'cnv_amp'],
+                 'data_type': ['mut_important'], # ['mut_important', 'cnv_del', 'cnv_amp'] 
                  'drop_AR': False,
                  'cnv_levels': 3,
                  'mut_binary': True,
@@ -53,7 +53,7 @@ nn_pathway = {
                                       verbose=2,
                                       epoch=300,
                                       shuffle=True,
-                                      batch_size=50,
+                                      batch_size=500, # 50
                                       save_name='pnet',
                                       debug=False,
                                       save_gradient=False,

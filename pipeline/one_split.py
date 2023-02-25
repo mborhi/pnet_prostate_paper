@@ -290,6 +290,7 @@ class OneSplitPipeline:
 
     def predict(self, model, x_test, y_test):
         logging.info('predicitng ...')
+        # logging.info('input: {}'.format(x_test))
         y_pred_test = model.predict(x_test)
         if hasattr(model, 'predict_proba'):
             y_pred_test_scores = model.predict_proba(x_test)[:, 1]
