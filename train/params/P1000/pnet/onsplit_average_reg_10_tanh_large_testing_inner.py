@@ -2,7 +2,7 @@ from model.builders.prostate_models import build_pnet2
 
 task = 'classification_binary'
 # selected_genes = 'tcga_prostate_expressed_genes_and_cancer_genes.csv'
-selected_genes = 'tcga_prostate_expressed_genes_and_cancer_genes_and_memebr_of_reactome.csv'
+selected_genes = 'top_varied_genes_ILC_IDC.csv'#'tcga_prostate_expressed_genes_and_cancer_genes_and_memebr_of_reactome.csv'
 data_base = {'id': 'ALL', 'type': 'prostate_paper',
              'params': {
                  'data_type': ['mut_important'], # ['mut_important', 'cnv_del', 'cnv_amp'] 
@@ -13,7 +13,7 @@ data_base = {'id': 'ALL', 'type': 'prostate_paper',
                  'combine_type': 'union',  # intersection
                  'use_coding_genes_only': True,
                  'selected_genes': selected_genes,
-                 'training_split': 0,
+                 'training_split': 'ILC_IDC',#0,
              }
              }
 data = [data_base]
@@ -75,6 +75,6 @@ models = [nn_pathway]
 class_weight = {0: 0.75, 1: 1.5}
 logistic = {'type': 'sgd', 'id': 'Logistic Regression',
             'params': {'loss': 'log', 'penalty': 'l2', 'alpha': 0.01, 'class_weight': class_weight}}
-models.append(logistic)
+# models.append(logistic)
 
 pipeline = {'type': 'one_split', 'params': {'save_train': True, 'eval_dataset': 'test'}}

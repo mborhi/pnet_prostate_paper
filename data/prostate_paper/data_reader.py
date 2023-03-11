@@ -11,8 +11,8 @@ processed_path = join(PROSTATE_DATA_PATH, 'processed')
 # use this one
 gene_final_no_silent_no_intron = 'P1000_final_analysis_set_cross__no_silent_no_introns_not_from_the_paper.csv'
 cnv_filename = 'P1000_data_CNA_paper.csv'
-response_filename = 'response_paper.csv'
-gene_important_mutations_only = 'P1000_final_analysis_set_cross_important_only.csv'
+response_filename = 'ILC_IDC_sample_responses.csv' #'response_paper.csv'
+gene_important_mutations_only = 'sample2muts.csv'#'P1000_final_analysis_set_cross_important_only.csv'
 gene_important_mutations_only_plus_hotspots = 'P1000_final_analysis_set_cross_important_only_plus_hotspots.csv'
 gene_hotspots = 'P1000_final_analysis_set_cross_hotspots.csv'
 gene_truncating_mutations_only = 'P1000_final_analysis_set_cross_truncating_only.csv'
@@ -49,23 +49,25 @@ def load_data(filename, selected_genes=None):
     # join with the labels
     all = data.join(labels, how='inner')
     all = all[~all['response'].isnull()]
-
     response = all['response']
     samples = all.index
+    # logging.info('response: %s', response)
 
     del all['response']
     x = all
-    genes = all.columns
+    genes = selected_genes#all.columns
 
     if not selected_genes is None:
         intersect = set.intersection(set(genes), selected_genes)
         if len(intersect) < len(selected_genes):
             # raise Exception('wrong gene')
             logging.warning('some genes dont exist in the original data set')
+            logging.info('intersect length %s', len(intersect))
         x = x.loc[:, intersect]
         genes = intersect
     logging.info('loaded data %d samples, %d variables, %d responses ' % (x.shape[0], x.shape[1], response.shape[0]))
-    logging.info(len(genes))
+    logging.info('number of genes loaded: %s', len(genes))
+    # logging.info('response: %s', response)
     return x, response, samples, genes
 
 
@@ -407,11 +409,11 @@ class ProstateDataPaper():
         columns = self.columns
         splits_path = join(PROSTATE_DATA_PATH, 'splits')
 
-        training_file = 'training_set_{}.csv'.format(self.training_split)
+        training_file = 'training_set_ILC_IDC.csv'#'training_set_{}.csv'.format(self.training_split)
         training_set = pd.read_csv(join(splits_path, training_file))
 
-        validation_set = pd.read_csv(join(splits_path, 'validation_set.csv'))
-        testing_set = pd.read_csv(join(splits_path, 'test_set.csv'))
+        validation_set = pd.read_csv(join(splits_path, 'validation_set_ILC_IDC.csv'))#'validation_set.csv'))
+        testing_set = pd.read_csv(join(splits_path, 'test_set_ILC_IDC.csv'))#'test_set.csv'))
 
         info_train = list(set(info).intersection(training_set.id))
         info_validate = list(set(info).intersection(validation_set.id))
