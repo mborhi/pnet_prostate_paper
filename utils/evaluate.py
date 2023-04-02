@@ -36,6 +36,26 @@ def evalualte(y_test, y_pred, y_pred_score=None):
     # score['aupr'] = aupr
     return score
 
+def specific_agreement(category, conf_mat):
+    """Calculates Specific Agreement scores for dichotomous catgories.
+    
+    https://github.com/jmgirard/mReliability/wiki/Specific-agreement-coefficient
+
+    Inputs
+    ------
+    category: int
+        Either 0 or 1, signifying the positive and negative categories respectively. 
+    conf-mat: [[int]]
+        The confusion matrix.
+    
+    Returns
+    -------
+    float 
+        The Specific Agreement score for the given category.
+    """
+    num = 2 * conf_mat[category][category]
+    denom = 2 * conf_mat[category][category] + conf_mat[0][1] + conf_mat[1][0]
+    return num / denom
 
 def evalualte_classification_binary(y_test, y_pred, y_pred_score=None):
     print y_test.shape, y_pred.shape
@@ -48,7 +68,12 @@ def evalualte_classification_binary(y_test, y_pred, y_pred_score=None):
     f1 = metrics.f1_score(y_test, y_pred)
     precision = metrics.precision_score(y_test, y_pred)
     recall = metrics.recall_score(y_test, y_pred)
+    # add mcc, negative f1 (specific agreement)
+    mcc = metrics.matthews_corrcoef(y_test, y_pred)
+    neg_f1 = specific_agreement(1, metrics.confusion_matrix(y_test, y_pred))
     logging.info(metrics.classification_report(y_test, y_pred))
+    logging.info("MCC:\t%.6f", mcc)
+    logging.info("F1 Score for Negative Class:\t%.6f", neg_f1)
     from sklearn.metrics import average_precision_score
     aupr = average_precision_score(y_test, y_pred_score)
     score = {}
@@ -58,6 +83,8 @@ def evalualte_classification_binary(y_test, y_pred, y_pred_score=None):
     score['f1'] = f1
     score['aupr'] = aupr
     score['recall'] = recall
+    score['mcc'] = mcc
+    score['neg_f1'] = neg_f1
     return score
 
 

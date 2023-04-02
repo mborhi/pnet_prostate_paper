@@ -11,8 +11,8 @@ processed_path = join(PROSTATE_DATA_PATH, 'processed')
 # use this one
 gene_final_no_silent_no_intron = 'P1000_final_analysis_set_cross__no_silent_no_introns_not_from_the_paper.csv'
 cnv_filename = 'P1000_data_CNA_paper.csv'
-response_filename = 'ILC_IDC_sample_responses.csv' #'response_paper.csv'
-gene_important_mutations_only = 'sample2muts.csv'#'P1000_final_analysis_set_cross_important_only.csv'
+response_filename = 'Pediatric_Neuroblastoma_AML/Pediatric_Neuroblastoma_AML_sample_responses.csv'# 'ILC_IDC_sample_responses.csv' #'response_paper.csv'
+gene_important_mutations_only = 'Pediatric_Neuroblastoma_AML/Pediatric_Neuroblastoma_AML_sample2muts.csv'#'P1000_final_analysis_set_cross_important_only.csv'
 gene_important_mutations_only_plus_hotspots = 'P1000_final_analysis_set_cross_important_only_plus_hotspots.csv'
 gene_hotspots = 'P1000_final_analysis_set_cross_hotspots.csv'
 gene_truncating_mutations_only = 'P1000_final_analysis_set_cross_truncating_only.csv'
@@ -412,8 +412,10 @@ class ProstateDataPaper():
         training_file = 'training_set_ILC_IDC.csv'#'training_set_{}.csv'.format(self.training_split)
         training_set = pd.read_csv(join(splits_path, training_file))
 
-        validation_set = pd.read_csv(join(splits_path, 'validation_set_ILC_IDC.csv'))#'validation_set.csv'))
-        testing_set = pd.read_csv(join(splits_path, 'test_set_ILC_IDC.csv'))#'test_set.csv'))
+        # validation_set = pd.read_csv(join(splits_path, 'validation_set_ILC_IDC.csv'))#'validation_set.csv'))
+        validation_set = pd.read_csv(join(processed_path, response_filename))#'validation_set.csv'))
+        # testing_set = pd.read_csv(join(splits_path, 'test_set_ILC_IDC.csv'))#'test_set.csv'))
+        testing_set = pd.read_csv(join(processed_path, response_filename))#'test_set.csv'))
 
         info_train = list(set(info).intersection(training_set.id))
         info_validate = list(set(info).intersection(validation_set.id))
@@ -435,4 +437,5 @@ class ProstateDataPaper():
         info_test = info[ind_test]
         info_validate = info[ind_validate]
 
+        # return x_train, x_validate, x_test, y_train, y_validate, y_test, info_train.copy(), info_validate, info_test.copy(), columns
         return x_train, x_validate, x_test, y_train, y_validate, y_test, info_train.copy(), info_validate, info_test.copy(), columns

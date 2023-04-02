@@ -36,7 +36,12 @@ params_file_list = []
 
 # pnet
 # params_file_list.append('./pnet/onsplit_average_reg_10_tanh_large_testing')
-params_file_list.append('./pnet/onsplit_average_reg_10_tanh_large_testing_inner')
+# params_file_list.append('./pnet/onsplit_average_reg_10_tanh_large_testing_inner')
+# params_file_list.append('./pnet/Lung_cross_validation')
+# params_file_list.append('./pnet/Lymphoid_cross_validation')
+# params_file_list.append('./pnet/Colorectal_cross_validation')
+# params_file_list.append('./pnet/Brain_cross_validation')
+params_file_list.append('./pnet/Pediatric_Neuroblastoma_AML_cross_validation')
 # params_file_list.append('./pnet/crossvalidation_average_reg_10_tanh')
 #
 # # other ML models
